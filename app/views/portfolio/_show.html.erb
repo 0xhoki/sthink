@@ -1,0 +1,20 @@
+<% if  @user.present? %>
+  <% @user.portfolios.order("created_at ASC").each do |portfolio|%>
+      <div class="panel panel-default" align="center" style="float: left;">
+       <div class="panel-heading">
+        <div class = "portimg">
+          <%= image_tag(portfolio.image, :id => 'portfolio-croppedimage', :onload => 'resizeImg_Portfolio(this)') %>
+        </div>
+        <div class = "col">
+          <%= portfolio.title %>
+          <%= link_to edit_portfolio_path(portfolio), {:remote => true, 'data-target' => "#portfolio-dialog", 'data-toggle' => "modal"} do%>
+            <span class="glyphicon glyphicon-pencil"></span>
+          <% end %>
+          <%= link_to portfolio_path(portfolio), {:remote => true, :method => :delete , data: {confirm: 'Are you sure?'}} do%>
+            <span class="glyphicon glyphicon-trash"></span>
+          <% end %>
+        </div>
+      </div> 
+    </div>
+  <% end %>
+<% end %>

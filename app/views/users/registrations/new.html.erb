@@ -1,0 +1,110 @@
+<head>
+  <meta name="title" content="New registration">
+  <meta name="description" content="Making new registrations for architects, surveyors and loft conversion.">
+  <meta name="keywords" content="message, freelance architects, loft conversion">
+</head>
+<div class = "container" id = "signup_form">
+  <div class="col-lg-12">
+  </br>
+  <h1 align="center">Please input your details</h1>
+  </br>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <div class="form-group" align = "center" >
+
+          <%= image_tag('avatar.png', id: "croppedimage", alt: "", class: "avatar-circle-lg") %></br></br>
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#uploadAvatar">Add a photo or logo</button>
+
+          <div id="uploadAvatar" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Upload your photo</h4>
+                </div>
+                <div class="modal-body">
+                  <% if resource.image? %>
+                    <%= image_tag(resource.image, id: "img-profile-source", alt: "", class: "hidden") %>
+                  <% else %>
+                    <%= image_tag('avatar.png', id: "img-profile-source", alt: "", class: "hidden") %>
+                  <% end %>
+                  
+                  <canvas id="myCanvas" class="hidden"></canvas>
+                  <canvas id="myCanvasOrientationFix" class="hidden"></canvas>
+                  <img id = "img-profile-source-tmp" class="hidden"></img>
+                  
+                  <div id="crop_container">
+                    
+                  </div>
+                  </br></br>
+                  <div>
+                    <% for attribute in [:zoom_w, :zoom_h, :zoom_x, :zoom_y, :drag_x, :drag_y, :rotation_angle, :crop_x, :crop_y, :crop_w, :crop_h] %>
+                      <%= f.hidden_field attribute, :id => attribute %>
+                    <% end %>
+                  </div>
+                  <%= f.file_field :image, class: 'photo_upload', id: 'avatar-upload' %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" onclick="cropbuttonclick()" class="btn btn-default" data-dismiss="modal">Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <br/>
+
+        <div class="btn-group btn-group-justified form-group" data-toggle="buttons-radio" align="center">
+
+          <div>
+            <%= f.radio_button :user_type, "Client", id: "Client" %>
+            <span>Hire a Freelancer</span>
+          </div>
+
+          <div>
+            <%= f.radio_button :user_type, "Freelancer", id: "Freelancer" %>
+            <span>Work as a Freelancer</span>
+          </div>
+
+        </div> <br/><br/>
+
+        <div class="form-group">
+          <%= f.label :first_name, "FIRST NAME" %>
+          <%= f.text_field :first_name, autofocus: true, class: "form-control", placeholder: "FirstName", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :last_name, "LAST NAME" %>
+          <%= f.text_field :last_name, autofocus: true, class: "form-control" , placeholder: "LastName", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :postcode, "POSTCODE" %>
+          <%= f.text_field :postcode, autofocus: true, class: "form-control" , placeholder: "Enter postcode", required: true  %>
+        </div>
+
+        <div class="form-group" >
+          <%= f.label :email, "EMAIL" %>
+          <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email: example@domain.com", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, "CREATE PASSWORD" %><i>(Minimum 6 characters)</i>
+          <%= f.password_field :password, autocomplete: "off", class: "form-control",placeholder: "Create a password", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, "CONFIRM PASSWORD" %><i>(Minimum 6 characters)</i>
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" ,placeholder: "Password confirm", required: true %>
+        </div>
+        
+        <br>
+        <div class="form-group" id = "button">
+          <%= f.submit "Sign up", class: "btn btn-success" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>

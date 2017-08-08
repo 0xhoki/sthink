@@ -1,0 +1,257 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+:root{
+  --orange-color:#ff9600;
+}
+
+body {
+  color: #5a5a5a;
+}
+
+.center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Set custom container's style
+-------------------------------------------------- */
+.custom-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid lightgrey;
+  background-color: #f8f8f8;
+}
+
+.no-content-fill {
+  width: 100%;
+  height: 150px;
+  text-align: center;
+}
+
+.less-highlight {
+  color: gray;
+}
+
+/* Set table cell's style
+-------------------------------------------------- */
+.custom-table-cell {
+  margin: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.custom-table-cell-description {
+  margin-top: 6px;
+  line-height: 1.2em;
+  max-height: 3.6em;
+  overflow: hidden;
+}
+
+.custom-table-cell-title-link {
+  font-size: 1.5em;
+  color: var(--orange-color);
+}
+
+/* Carousel base class */
+.cover-container {
+  width: 100%;
+  height: 500px;
+  max-height: 1200px;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+  background: black;
+}
+
+.cover-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: auto;
+  height: calc(100% + 1px);
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+.carousel {
+  height: 500px;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  background-color: #777;
+}
+
+/* Declare position of GET STARTED form */
+#startForm {
+  position:absolute;
+    top:40%;
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+/* Navigation Bar
+-------------------------------------------------- */
+
+.navbar-form {
+    padding: 10px !important;
+  }
+
+.navbar-brand {
+  padding: 0px;
+}
+
+.navbar-nav > li > a {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+ul.nav li a, ul.nav li a:visited {
+	color: var(--orange-color);
+}
+
+ul.nav li a:hover, ul.nav li a:active {
+	color: var(--orange-color);
+}
+
+ul.nav li.active a {
+	color: var(--orange-color);
+}
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  .navbar-wrapper .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+
+  .navbar-form {
+    padding: 15px !important;
+  }
+
+  .navbar-brand {
+    padding: 15px;
+    padding-left: 50px;
+  }
+
+  .navbar-nav > li > a {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+  }
+
+  .cover-container img {
+    width: 100%;
+    height: auto;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  /* Carousel caption and description responsive */
+  .carousel-caption h1 {
+    font-size: 21px;
+  }
+
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  /* Get Started From Responsive */
+  #startForm .input-group-btn, #startForm .input-group .form-control {
+    display: block;
+    margin-bottom: 10px;
+    clear: both;
+    width: 100%;
+    border-radius: 4px;
+  }
+
+  #startForm .input-group {
+    display: block;
+  }
+
+  #startForm {
+    position:absolute;
+    top:20%;
+    width: 100%;
+  }
+
+  #startForm .input-group-btn > .btn {
+    width: 100%;
+    border-radius: 4px;
+  }
+}
+
+@media (min-width: 992px) {
+
+  .featurette-heading {
+    margin-top: 120px;
+  }
+}

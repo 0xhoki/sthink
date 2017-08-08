@@ -1,0 +1,130 @@
+<head>
+  <meta name="title" content="Profile shows">
+  <meta name="description" content="Showing profiles for planning application, building control and subsidence.">
+  <meta name="keywords" content="planning application, building control, subsidence">
+</head>
+<div class="container custom-container">
+  
+  <div class="custom-table-cell">
+    <div class="row">
+
+      <div class="col-md-2">
+        <div class="profile-header-container">
+          <div class="profile-header-img">
+            <%= show_avatar(@user, "avatar-circle-lg") %>
+          </div>
+        </div> 
+      </div>
+      
+      <div class="col-md-10">
+
+        <div class="row">
+          <div class="col-md-10">
+            <h3> <%= @user.name %> </h3>
+          </div>
+          <div class="col-md-2">
+            <% if user_signed_in? && current_user.user_type == 'Client' && current_user.id != @user.id %>
+              <%= link_to 'Contact', conversations_path(sender_id: current_user.id, recipient_id: @user.id), {method: 'post', class: "btn btn-info", style: "margin-top:15px; width: 100px;"} %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h4> <%= @user.title %> </h4>
+          </div>
+        </div>
+
+        </br>
+
+        <div class="row">
+          <div class="col-md-3">
+            <span class="glyphicon glyphicon-map-marker"></span>
+            <span class="less-highlight">Location : </span>
+            <span><%= @user.postcode %></span>
+          </div>
+
+          <div class="col-md-9">
+            <span class="less-highlight">Category : </span>
+            <span><%= @user.profession %></span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>OVERVIEW</h3>
+    </div>
+    
+    <div class="col-md-12">
+      <p class="custom-table-cell-description"><%= @user.overview %></p>
+    </div>
+  </div>
+   <div class="form-group">
+      <label>Portfolio</label>
+      <div id = "all_portfolios" class="container">
+        <%= render 'portfolio/show_others' %>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Work History</h3>
+    </div>
+    
+    <% 
+      @jobs = Array.new
+      @user.proposals.each do |p|
+        if p.job.status == 'end'
+          @jobs.append(p.job)
+        end
+      end
+      @jobs.sort! { |a,b| b.ended_at <=> a.ended_at}
+    %>
+
+    <% if @jobs.count > 0 %>
+      <% @jobs.each do |job| %>
+        <div class="row custom-table-cell">
+          <div class="col-md-9">
+            <div class="row">
+              <h4><%= job.title %></h4>
+            </div>
+
+            <div class="row">
+              <p><%= job.time_duration_spent %></p>
+            </div>
+
+            <% if job.client_review.present? %>
+              <div class = "row" style="margin-left: 30px;">
+                <div class="row">
+                  <div id="hearts" class="starrr" data-rating=<%= job.client_review.score %> style="pointer-events: none" ></div>
+                  <span id="count"><%= job.client_review.score %></span> star(s)
+                </div>
+
+                <div class="row">
+                  <p><%= job.client_review.notes %></p>
+                </div>
+              </div>
+            <% else %>
+              <div class = "row" style="margin-left: 30px;">
+                <p> No Review </p>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="col-md-3">
+            <h5>£ <%= job.earned_by_freelancer %> earned</h5>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-md-12">
+        <p class="custom-table-cell-description">No work history on Structured Thinking</p>
+      </div>
+    <% end %>
+  </div>
+
+</div>

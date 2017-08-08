@@ -1,0 +1,62 @@
+<head>
+  <meta name="title" content="registration settings">
+  <meta name="description" content="Showing settings for extension and structural engineers.">
+  <meta name="keywords" content="settings, extension, structural engineers">
+</head>
+<div class = "container" align = "center" id = "edit_profile_form">
+  <div class="col-lg-12">
+  </br>
+  <h2 align="center">Change your password</h2>
+  </br>
+  <%= form_for(@user, url: update_settings_path, html: { method: :patch }) do |f| %>
+    <%= devise_error_messages! %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <div class="form-group">
+          <%= f.label :current_password, "EXISTING PASSWORD" %><br />
+          <%= f.password_field :current_password, autocomplete: "off", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, "NEW PASSWORD" %> <i>(Minimum 6 characters)</i> <br />
+          <%= f.password_field :password, autocomplete: "off", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, "CONFIRM NEW PASSWORD" %> <i>(Minimum 6 characters)</i> <br />
+          <%= f.password_field :password_confirmation, autocomplete: "off", required: true %>
+        </div>
+
+        <br>
+        <div class="form-group" id = "button">
+          <%= f.submit "Update", class: "btn btn-success" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @user.user_type == "Freelancer" %>
+    </br>
+    <h2 align="center">Set Your Get Paid Method</h2>
+    </br>
+    <%= form_for(@user, url: update_get_paid_email_path, html: { method: :patch }) do |f| %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+
+          <div class="form-group" >
+            <%= f.label :get_paid_email, "PAYPAL ADDRESS" %>
+            <%= f.email_field :get_paid_email, autofocus: true, class: "form-control", placeholder: "Email: example@domain.com", required: true %>
+          </div>
+
+          <br>
+          <div class="form-group" id = "button">
+            <%= f.submit "Submit", class: "btn btn-success" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  
+  </div>
+</div>

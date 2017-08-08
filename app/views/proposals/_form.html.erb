@@ -1,0 +1,59 @@
+<div class = "container" id = "job_form">
+  <div class="col-lg">
+  <%= form_for proposal, html: { multipart: true } do |f| %>
+    <% if proposal.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(proposal.errors.count, "error") %> prohibited this proposal from being saved:</h2>
+
+        <ul>
+        <% proposal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <div class="form-group">
+          <%= f.label "Desired price (£)" %>
+          <%= f.number_field :price, autofocus: true, class: "form-control", placeholder: "Price", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label "Cover Letter" %>
+          <%= f.text_area :description, autofocus: true, class: "form-control" , placeholder: "e.g. I've been working as a structural engineer for 10 years and have rich experiences.", rows: 20, required: true %>
+        </div>
+
+        <div class="form-group" >
+          <%= f.label "When can you start?" %><i>(optional)</i>
+          <%= f.date_field :start_date, class: "form-control" %>
+        </div>
+
+        <div class="form-group" >
+          <%= f.label "End by?" %><i>(optional)</i>
+          <%= f.date_field :end_date, class: "form-control"%>
+        </div>
+
+        <div class="form-group">
+          <span class="glyphicon glyphicon-paperclip"></span>
+          <%= f.label "Attachments" %>
+          <%= f.file_field :attachments, :multiple => true, class: "photo_upload", id: "proposal-attachments-upload" %>
+          <div id = "proposal_attachment_div" class = "well well-sm">
+            <% proposal.attachments.each do |a|%>
+              <%= a.path.split("/").last %>
+              <br>
+            <% end %>
+          </div>
+        </div>
+
+        <br>
+        <div class="form-group" id = "button">
+          <%= f.submit class: "btn btn-success" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>

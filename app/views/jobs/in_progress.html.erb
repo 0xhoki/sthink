@@ -1,0 +1,55 @@
+<head>
+  <meta name="title" content="In-progress job">
+  <meta name="description" content="Shows the description of in-progress job to structural engieers.">
+  <meta name="keywords" content="Building control, in-progress job, freelancer, Extension">
+</head>
+<div class="container">
+  <h4>My Jobs in progress</h4>
+</div>
+
+<div class="container custom-container">
+  <% if @jobs.count > 0 %>
+    <% @jobs.each do |job| %>
+      <div class="custom-table-cell">
+        <div class="row"> 
+
+          <div class="col-md-6">
+            <div class="row">
+              <%= link_to job.title, in_progress_details_jobs_path(id: job.id), {method: :get, class: "custom-table-cell-title-link"} %>
+            </div>
+            <div class="row">
+              <span class="glyphicon glyphicon-record"></span>
+              <span class="less-highlight">Hired : </span>
+              <span><%= job.freelancer.name %></span>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="row">
+              <span class="less-highlight">Budget : </span>
+              <span>£ <%= job.price %></span>
+            </div>
+            <div class="row">
+              <span class="less-highlight">Spent : </span>
+              <span>£ <%= job.spent %> </span>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="row">
+              <span class="glyphicon glyphicon-time"></span>
+              <span class="less-highlight">Started </span>
+              <span><%= job.started_at.to_date %></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-content-fill">
+      <h3> No active job ... </h3>
+    </div>
+  <% end %>
+  
+</div>

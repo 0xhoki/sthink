@@ -1,0 +1,14 @@
+<% if  @user.present? %>
+  <% @user.portfolios.order("created_at ASC").each do |portfolio|%>
+      <div class="panel panel-default" align="center" style="float: left;">
+       <div class="panel-heading">
+        <div class = "portimg">
+          <%= image_tag(portfolio.image, :id => 'portfolio-croppedimage', :onload => 'resizeImg_Portfolio(this)') %>
+        </div>
+        <div class = "col">
+          <%= portfolio.title %>
+        </div>
+      </div> 
+    </div>
+  <% end %>
+<% end %>

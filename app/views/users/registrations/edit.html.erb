@@ -1,0 +1,132 @@
+<head>
+  <meta name="title" content="Registration edit">
+  <meta name="description" content="Editing registrations for renovation and freelance surveyors.">
+  <meta name="keywords" content="edit registration, freelance surveyors, renovation">
+</head>
+<div class = "container" id = "edit_profile_form">
+  <div class="col-lg-12">
+  </br>
+  <h1 align="center">Update your profile</h1>
+  </br>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= devise_error_messages! %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <div class="form-group" align="center">
+          <% if resource.image? %>
+            <%= image_tag(resource.image.custom_crop, id: "croppedimage", alt: "", class: "avatar-circle-lg") %></br></br>
+          <% else %>
+            <%= image_tag('avatar.png', id: "croppedimage", alt: "", class: "avatar-circle-lg") %></br></br>
+          <% end %>
+
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#uploadAvatar">Edit your Photo</button>
+
+          <div id="uploadAvatar" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Upload your photo</h4>
+                </div>
+                <div class="modal-body">
+                  <% if resource.image? %>
+                    <%= image_tag(resource.image, id: "img-profile-source", alt: "", class: "hidden") %>
+                  <% else %>
+                    <%= image_tag('avatar.png', id: "img-profile-source", alt: "", class: "hidden") %>
+                  <% end %>
+                  
+                  
+                  <canvas id="myCanvasOrientationFix" class="hidden"></canvas>
+                  <img id = "img-profile-source-tmp" class="hidden"></img>
+                  <div id="crop_container">
+                    
+                  </div>
+                  </br></br>
+                  <div>
+                    <% for attribute in [:zoom_w, :zoom_h, :zoom_x, :zoom_y, :drag_x, :drag_y, :rotation_angle, :crop_x, :crop_y, :crop_w, :crop_h] %>
+                      <%= f.hidden_field attribute, :id => attribute %>
+                    <% end %>
+                  </div>
+                  <%= f.file_field :image, class: 'photo_upload', id: 'avatar-upload' %>                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" onclick="cropbuttonclick()" class="btn btn-default" data-dismiss="modal">Done</button>
+                </div>
+              </div>
+            </div>
+          </div>        
+        </div>
+
+        <canvas id="myCanvas" class="hidden"></canvas>
+
+        <div class="form-group">
+          <%= f.label :first_name, "FIRST NAME" %>
+          <%= f.text_field :first_name, autofocus: true, class: "form-control", placeholder: "FirstName", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :last_name, "LAST NAME" %>
+          <%= f.text_field :last_name, autofocus: true, class: "form-control" , placeholder: "LastName", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :postcode, "POSTCODE" %>
+          <%= f.text_field :postcode, autofocus: true, class: "form-control", placeholder: "Enter postcode", required: true  %>
+        </div>
+
+        <% if current_user.user_type == "Freelancer" %>
+
+          <div class="form-group">
+            <%= f.label :title, "JOB TITLE" %>
+            <%= f.text_field :title, autofocus: true, class: "form-control", placeholder: "Enter your title statement", required: true %>
+          </div>
+          
+          <div class="row">
+            <div class="form-group col-md-6">
+              <%= f.label :profession_id, "PROFESSION" %>
+              </br>
+              <%= f.select :profession_id, Profession.where.not(title: "Don't know").collect{|p| [p.title, p.id]}, {:include_blank => "-- SELECT ONE --"}, {class: "form-control", :onchange => remote_request(:post, '/change_categories', {:profession_id=>"$('#user_profession_id').val()"}, :user_skills), required: true } %>
+            </div>
+            <div class="form-group col-md-6">
+              <%= f.label :skills, "SELECT YOUR SKILLS" %>
+              </br>
+              <% if f.object.profession_id.present? && !f.object.new_record? %>
+                <%= f.select :skills, Profession.find_by_id(f.object.profession_id).try(:categories).collect{|c| [c.title, c.id]}, {}, {multiple: true, class: "dropdown form-control", required: true} %>
+              <% else %>
+                <%= f.select :skills, {}, {}, {multiple: true, class: "dropdown form-control", required: true} %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :overview, "OVERVIEW" %>
+            <%= f.text_area :overview, autofocus: true, class: "form-control" , placeholder: "Please describe your skills, your experience and the types of job you are looking for. A more detailed description will help you find more jobs.", rows: 20, required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :portfolios, "Portfolio" %>
+            <%= link_to new_portfolio_path, {:remote => true, 'data-target' => "#portfolio-dialog", 'data-toggle' => "modal"} do%>
+              <span class="glyphicon glyphicon-plus-sign"></span>
+            <%end%>
+            <div id = "all_portfolios" class="container">
+              <%= render 'portfolio/show' %>
+            </div>
+          </div>
+
+        <% end %>
+       
+        <br>
+        <div class="form-group" id = "button">
+          <%= f.submit "Update", class: "btn btn-success" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+
+<div id="portfolio-dialog" class="modal fade" role="dialog">
+  <%= render 'portfolio/remotedialog' %>
+</div>
+

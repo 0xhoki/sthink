@@ -1,0 +1,107 @@
+<nav class="navbar navbar-default">
+  <div class = "container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img alt="Brand" src="<%= image_url('logo.png') %>">
+      </a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1" >
+      <input id = "job_search_url" class = "hidden" value = <%= job_search_jobs_path %>>
+      <input id = "freelancer_search_url" class = "hidden" value =<%= freelancer_search_profile_index_path %>>
+      <form id = "searchForm" class="navbar-form navbar-left" action=<%= freelancer_search_profile_index_path %>>
+        <div class="col-lg-12">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:document.getElementById('searchText').setAttribute('placeholder', 'Find Freelancers'); document.getElementById('searchForm').setAttribute('action', $('#freelancer_search_url').val());">Freelancers</a></li>
+                  <li><a href="javascript:document.getElementById('searchText').setAttribute('placeholder', 'Find Jobs'); document.getElementById('searchForm').setAttribute('action', $('#job_search_url').val());">Jobs</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+              <input id = "searchText" name="searchText" type="text" class="form-control mr-sm-2" aria-label="Search" placeholder="Find Freelancers">
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+      </form>
+      <ul class="nav navbar-nav">
+        <li><a href="<%= about_index_path %>">About</a></li>
+        <li><a href="<%= how_it_works_about_index_path %>">How it works</a></li>
+        <li><a href="<%= contact_us_about_index_path %>">Contact us</a></li>
+        <li><a href="<%= invite_friends_about_index_path %>">Invite a friend</a></li>
+      </ul>
+      <% if user_signed_in? %>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%= link_to 'MESSAGES', conversations_path, method: :get%>
+        </li>
+        <% if current_user.user_type == 'Client' %>
+          <li>
+            <%= link_to 'POST A JOB', new_job_path, method: :get%>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to 'BROWSE JOB', browse_jobs_path, method: :get%>
+          </li>
+        <% end %>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:#ff9600">
+              MY JOBS
+              <span class="caret"></span>
+          </a>
+          <% if current_user.user_type == 'Client' %>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'OPEN JOBS', jobs_path, method: :get %></li>
+              <li><%= link_to 'IN PROGRESS', in_progress_jobs_path, method: :get %></li>
+              <li><%= link_to 'ARCHIVED', ended_jobs_path, method: :get %></li>
+            </ul>
+          <% else %>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'MY PROPOSALS', jobs_path, method: :get %></li>
+              <li><%= link_to 'IN PROGRESS', in_progress_by_freelancer_jobs_path, method: :get %></li>
+              <li><%= link_to 'ARCHIVED', ended_for_freelancer_jobs_path, method: :get %></li>
+            </ul>
+          <% end %>
+        </li>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:#ff9600">
+              <%= show_avatar(current_user, "avatar-circle-sm") %>
+              <%= current_user.name %>
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'PROFILE', edit_user_registration_path %></li>
+            <li><%= link_to 'SETTINGS', settings_path %></li>
+            <% if current_user.user_type == 'Client' %>
+              <li><%= link_to 'TRANSACTIONS', client_history_transactions_path %></li>
+            <% else %>
+              <li><%= link_to 'TRANSACTIONS', freelancer_history_transactions_path %></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
+            <li>
+              <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete%>
+            </li>
+          </ul>
+        </li>
+        
+      </ul>
+      <% else %>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%= link_to 'SIGN UP', new_user_registration_path %>
+        </li>
+        <li>
+          <%= link_to 'LOG IN', new_user_session_path %>
+        </li>
+      </ul>
+      <% end %>
+      
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>

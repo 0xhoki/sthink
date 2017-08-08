@@ -1,0 +1,97 @@
+<head>
+  <meta name="title" content="Proposals show page">
+  <meta name="description" content="Showing proposals for lease extension, renovation and home improvement.">
+  <meta name="keywords" content="lease extension, renovation, home improvement">
+</head>
+
+
+<div class="container custom-container">
+
+  <div class="custom-table-cell">
+
+    <div class="row">
+
+      <div class="col-md-2">
+        <div class="profile-header-container">
+          <div class="profile-header-img">
+            <%= show_avatar(@proposal.user, "avatar-circle-lg") %>
+          </div>
+        </div> 
+      </div>
+      
+      <div class="col-md-10">
+
+        <div class="row">
+          <div class="col-md-8">
+            <%= link_to @proposal.user.name, profile_index_path(user_id: @proposal.user_id), {method: :get, class: "custom-table-cell-title-link"} %>
+          </div>
+
+          <div class="col-md-2">
+            <%= link_to 'Contact', conversations_path(sender_id: current_user.id, recipient_id: @proposal.user_id), {method: 'post', class: "btn btn-info", style: "margin-top:15px; width: 100px;"} %>
+          </div>
+            
+          <div class="col-md-2">
+            <%= link_to 'Hire', hire_freelancer_jobs_path(id: @proposal.job_id, freelancer_id: @proposal.user_id), data: {:confirm => "Are you sure you want to hire the freelancer?"}, method: 'post', class: "btn btn-success", style: "margin-top:15px; width: 100px;" %>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h4> <%= @proposal.user.title %> </h4>
+          </div>
+        </div>
+
+        </br>
+
+        <div class="row">
+          <div class="col-md-3">
+            <span class="glyphicon glyphicon-map-marker"></span>
+            <span class="less-highlight">Location : </span>
+            <span><%= @proposal.user.postcode %></span>
+          </div>
+
+          <div class="col-md-9">
+            <span class="less-highlight">Category : </span>
+            <span><%= @proposal.user.profession %></span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="custom-table-cell row">
+
+    <div class="col-md-12">
+      <h3>Proposal Letter</h3>
+    </div>
+    
+    <div class="col-md-12">
+      <p class="custom-table-cell-description"><%= @proposal.description %></p>
+    </div>
+
+    <br>
+    <div class="col-md-12">
+      <h3>Attachments: </h3>    
+      <% @proposal.attachments.each do |a|%>
+        <span class="glyphicon glyphicon-paperclip"></span>
+        <%= link_to a.path.split("/").last, download_file_jobs_path(:attchmentpath => a.path), method: 'post' %>
+        <br>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="custom-table-cell row">
+
+    <div class="col-md-12">
+      <h3>OVERVIEW</h3>
+    </div>
+    
+    <div class="col-md-12">
+      <p class="custom-table-cell-description"><%= @proposal.user.overview %></p>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<head>
+  <meta name="title" content="contact us page of structured-thinking">
+  <meta name="description" content="This page shows how to contact site support team.">
+  <meta name="keywords" content="Freelance structural engineer, Freelance architect, Freelance surveyor">
+</head>
+<div class="jumbotron text-center">
+  <h1>Contact us</h1>
+  <p>Feel free to contact us</p> 
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            <% if flash[:alert] %>
+                <p class="flash-alert"><%= flash[:alert] %></p>
+            <% end %>
+            <% if flash[:notice] %>
+                <p class="flash-notice"><%= flash[:notice] %></p>
+            <% end %>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="well well-sm">
+                <%= form_for(@message, url: send_contact_us_message_about_index_path) do |f| %>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <%= f.label :name, "Name" %>
+                            <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "Enter name", required: true %>
+                        </div>
+                        <div class="form-group">
+                            <%= f.label :email, "Email Address" %>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                                <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Enter email", required: true %>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <%= f.label :subject, "Subject" %>
+                            <%= f.select :subject, options_for_select(["General Customer Service", "Suggestions", "Product Support"]), {include_blank: "Choose One: "}, {class: "dropdown form-control", required: true} %>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <%= f.label :content, "Message" %>
+                            <%= f.text_area :content, autofocus: true, class: "form-control", placeholder: "Message", rows: 9, cols: 25, required: true %>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <%= f.submit "Send Message", class: "btn btn-warning pull-right" %>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <form>
+            <legend><span class="glyphicon glyphicon-globe"></span> Our office</legend>
+            <address>
+                <strong>Structured Thinking</strong><br>
+                Office 24<br>
+                94 Fulham Palace Road<br>
+                London<br>
+                W6 9PL<br>
+                <a href="mailto:info@structured-thinking.co.uk">info@structured-thinking.co.uk</a>
+            </address>
+            </form>
+        </div>
+    </div>
+</div>

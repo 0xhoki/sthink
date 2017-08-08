@@ -1,0 +1,10 @@
+<head>
+  <meta name="title" content="mailer-confirmation-email">
+  <meta name="description" content="Making messages for confirmation for example freelance surveyor.">
+  <meta name="keywords" content="mailer confirmation surveyor">
+</head>
+<p>Welcome <%= @email %>!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
